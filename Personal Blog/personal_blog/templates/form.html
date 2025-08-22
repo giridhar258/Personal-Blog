@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ heading }}</h1>
+  <p class="badge">{{ subheading }}</p>
+  <hr>
+  <form method="post">
+    <div class="field">
+      <label>Title</label>
+      <input type="text" name="title" required value="{{ article.title if article else '' }}">
+    </div>
+    <div class="field">
+      <label>Date of publication</label>
+      <input type="date" name="date" required value="{{ article.date if article else '' }}">
+    </div>
+    <div class="field">
+      <label>Content</label>
+      <textarea name="content" rows="12" required>{{ article.content if article else '' }}</textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn primary" type="submit">{{ cta }}</button>
+      <a href="{{ url_for('dashboard') }}" class="btn ghost">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Articles</h1>
+  <p class="badge">Latest posts</p>
+  <hr>
+  {% if articles %}
+    <div class="grid">
+      {% for a in articles %}
+        <div class="article-item">
+          <h3><a href="{{ url_for('article', slug=a.slug) }}">{{ a.title }}</a></h3>
+          <div class="badge">Published: {{ a.date }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty">No articles yet.</p>
+  {% endif %}
+{% endblock %}

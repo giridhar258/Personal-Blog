@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ title or "Personal Blog" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="nav">
+          <a href="{{ url_for('home') }}">Home</a>
+          {% if session.get('admin') %}
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}" class="btn ghost">Logout</a>
+          {% else %}
+            <a href="{{ url_for('login') }}" class="btn ghost">Login</a>
+          {% endif %}
+        </div>
+        <div class="badge">Personal Blog</div>
+      </div>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flash">
+            {% for m in messages %}{{ m }}{% if not loop.last %}<br>{% endif %}{% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      <div class="card">
+        {% block content %}{% endblock %}
+      </div>
+      <footer>© {{ now.year }} — A tiny Flask blog • No JS, just vibes</footer>
+    </div>
+  </body>
+</html>

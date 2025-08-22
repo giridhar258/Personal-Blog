@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="header" style="margin:0 0 8px 0">
+    <h1 style="margin:0">Dashboard</h1>
+    <a class="btn primary" href="{{ url_for('add_article') }}">+ New Article</a>
+  </div>
+  <p class="badge">Manage your content</p>
+  <hr>
+  {% if articles %}
+    <ul class="reset grid">
+      {% for a in articles %}
+        <li class="article-item">
+          <div style="display:flex; justify-content:space-between; gap:10px; align-items:center; flex-wrap:wrap">
+            <div>
+              <strong>{{ a.title }}</strong><br>
+              <span class="badge">{{ a.date }} • slug: {{ a.slug }}</span>
+            </div>
+            <div class="form-actions">
+              <a class="btn" href="{{ url_for('edit_article', slug=a.slug) }}">Edit</a>
+              <form method="post" action="{{ url_for('delete_article', slug=a.slug) }}" onsubmit="return confirm('Delete this article?');">
+                <button class="btn warn" type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty">No articles yet. Click “New Article”.</p>
+  {% endif %}
+{% endblock %}
